@@ -16,13 +16,23 @@
 
 ;; basic C++ standards
 (setq-default c-basic-offset 4 c-default-style "linux")
-(setq-default tab-width 4 indent-tabs-mode t)
+(setq-default tab-width 4 indent-tabs-mode nil)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;; electric pair mode replaces autopair below-- it's automatic bracket insertion, etc
-(electric-pair-mode 1)
+;(electric-indent-mode 1)
+;(electric-pair-mode 1)
+;(setq electric-layout-rules '((?\{ . around) (?\} . around)))
+
+;; c-toggle-auto-newline does not play well with electric
+(add-hook 'c-mode-hook
+  (lambda ()
+    (c-toggle-auto-newline 1)
+    (c-set-style "cc-mode")))
+
 
 ;; basic autocomplete with default configuration
+;; M-x package-install [RET] auto-complete [RET]
 (require 'auto-complete-config)
 (ac-config-default)
 
@@ -40,6 +50,7 @@
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 ;; flycheck checks syntax on the fly
+;; M-x package-install [RET] flycheck [RET]
 (require 'flycheck)
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
