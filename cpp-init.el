@@ -30,6 +30,10 @@
     (c-toggle-auto-newline 1)
     (c-set-style "cc-mode")))
 
+;; 80 char column marker
+;; M-x package-install [RET] column-marker [RET]
+(require 'column-marker)
+
 
 ;; basic autocomplete with default configuration
 ;; M-x package-install [RET] auto-complete [RET]
@@ -38,6 +42,8 @@
 
 ;; add iron hooks for c++
 (add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c++-mode-hook
+          (lambda () (interactive) (column-marker-1 80)))
 
 ;; replace the completion-at-point and complete-symbol bindings in
 ;; irony-mode's buffers by irony-mode's function
@@ -83,6 +89,15 @@
                '(statement-cont . align-enum-class-closing-brace)))
 
 (add-hook 'c++-mode-hook 'fix-enum-class)
+
+
+(require 'color-theme)
+(color-theme-initialize)
+(setq color-theme-is-global t)
+(color-theme-subtle-hacker)
+
+;(add-to-list 'load-path "~/emacsjunk/")
+;(load-file "~/emacsjunk/python.el")
 
 
 ;; yasnippet configuration
